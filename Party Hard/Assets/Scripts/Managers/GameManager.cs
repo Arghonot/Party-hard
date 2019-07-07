@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class CustomActions
@@ -27,10 +27,32 @@ public class CustomActions
 public class GameManager : MonoBehaviour
 {
     public List<CustomActions> LaunchMenu;
-    public List<CustomActions> StartRound;
+    public List<CustomActions> StartRound; 
     public List<CustomActions> EndRound;
     public List<CustomActions> Entract;
 
+    string MenuLevel;
+    string EntractLevel;
+    string NextLevel;
+
+    static GameManager instance = null;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<GameManager>();
+            }
+
+            return instance;
+        }
+    }
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     /// <summary>
     /// This action will trigger the end of the round.
@@ -38,6 +60,23 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void TriggerEndOfRound()
     {
+        print("Calling Play");
+        SceneManager.LoadScene(NextLevel);
+    }
 
+    public void SetupNextLevel(string nextlevel)
+    {
+        NextLevel = nextlevel;
+    }
+
+    public void Quit()
+    {
+        print("quit");
+        UnityEditor.EditorApplication.isPlaying = false;
+    }
+
+    public void Settings()
+    {
+        print("Calling settings");
     }
 }

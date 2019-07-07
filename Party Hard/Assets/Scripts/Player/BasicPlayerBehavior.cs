@@ -24,7 +24,6 @@ public class BasicPlayerBehavior : MonoBehaviour
         {
             // We are grounded, so recalculate
             // move direction directly from axes
-            print(Input.GetAxis("LeftJoystickHorizontal") + "   " + Input.GetAxis("LeftJoystickVertical"));
 
             moveDirection = new Vector3(Input.GetAxis("LeftJoystickHorizontal"), 0.0f, -Input.GetAxis("LeftJoystickVertical"));
             moveDirection *= speed;
