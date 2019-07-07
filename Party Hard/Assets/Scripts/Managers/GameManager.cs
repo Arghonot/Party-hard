@@ -23,17 +23,26 @@ public class CustomActions
     public string DebugDefinition;
 }
 
-
 public class GameManager : MonoBehaviour
 {
+    #region ACTIONS
+
     public List<CustomActions> LaunchMenu;
-    public List<CustomActions> StartRound; 
+    public List<CustomActions> StartRound;
     public List<CustomActions> EndRound;
     public List<CustomActions> Entract;
+
+    #endregion
+
+    #region LEVELS
 
     string MenuLevel;
     string EntractLevel;
     string NextLevel;
+
+    #endregion
+
+    #region Singleton
 
     static GameManager instance = null;
     public static GameManager Instance
@@ -49,9 +58,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    RoundManager CurrentRoundManager;
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+    }
+
+    public RoundManager GetCurrentRoundManager()
+    {
+        return CurrentRoundManager;
+    }
+
+    public void SetCurrentRoundManager(RoundManager manager)
+    {
+        CurrentRoundManager = manager;
     }
 
     /// <summary>

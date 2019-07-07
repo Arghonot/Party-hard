@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    public List<Transform> players;
+
+    public Transform playerContainer;
 
 }

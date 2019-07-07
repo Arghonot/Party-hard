@@ -26,9 +26,10 @@ public class MenuManager : RoundManager
 
     private void Start()
     {
-        GameManager.Instance.SetupNextLevel("PlatformLevel");
-
+        print("MenuManager");
         MusicManager.Instance.SetupMusic(LevelOST);
+
+        GameManager.Instance.SetupNextLevel("PlatformLevel");
     }
 
     #region RUNTIME
