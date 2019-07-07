@@ -42,4 +42,10 @@ public class BasicPlayerBehavior : MonoBehaviour
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);
     }
+
+    /*
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        hit.transform.SendMessage("SomeFunction", SendMessageOptions.DontRequireReceiver);
+    }*/
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,9 +24,11 @@ public class MenuManager : RoundManager
     float TimeOnZone = 0f;
     public Zone TriggeredZone;
 
-    private void Awake()
+    private void Start()
     {
         GameManager.Instance.SetupNextLevel("PlatformLevel");
+
+        MusicManager.Instance.SetupMusic(LevelOST);
     }
 
     #region RUNTIME
