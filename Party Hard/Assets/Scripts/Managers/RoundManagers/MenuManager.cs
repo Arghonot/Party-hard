@@ -36,6 +36,34 @@ public class MenuManager : RoundManager
 
     private void Update()
     {
+        ActivatePlayers();
+        ManageZones();
+    }
+
+    void ActivatePlayers()
+    {
+        if (Input.GetButton("J1AButton"))
+        {
+            PlayerManager.Instance.ActivatePlayer(0);
+        }
+        if (Input.GetButton("J2AButton"))
+        {
+            PlayerManager.Instance.ActivatePlayer(1);
+        }
+        if (Input.GetButton("J3AButton"))
+        {
+            PlayerManager.Instance.ActivatePlayer(2);
+        }
+        if (Input.GetButton("J4AButton"))
+        {
+            PlayerManager.Instance.ActivatePlayer(3);
+        }
+    }
+
+    #region ZONES
+
+    void ManageZones()
+    {
         var PlayerInPlay = Physics.OverlapBox(PlayZone.position, Vector3.one * ZoneWidth, Quaternion.identity, mask);
         var PlayerInQuit = Physics.OverlapBox(QuitZone.position, Vector3.one * ZoneWidth, Quaternion.identity, mask);
         var PlayerInSettings = Physics.OverlapBox(SettingsZone.position, Vector3.one * ZoneWidth, Quaternion.identity, mask);
@@ -106,6 +134,7 @@ public class MenuManager : RoundManager
     {
         GameManager.Instance.Quit();
     }
+    #endregion
 
     #endregion
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class BasicPlayerBehavior : MonoBehaviour
 {
+    public int ID;
     CharacterController characterController;
 
     public float speed = 6.0f;
@@ -13,9 +14,23 @@ public class BasicPlayerBehavior : MonoBehaviour
 
     private Vector3 moveDirection = Vector3.zero;
 
+    #region INPUT NAMES
+
+    string LeftJoystickHorizontal;
+    string LeftJoystickVertical;
+    string RightJoystickHorizontal;
+    string RightJoysticVertical;
+    string AButton;
+    string BButton;
+    string XButton;
+    string YButton;
+
+    #endregion
+
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        InitInputs();
     }
 
     void Update()
@@ -25,10 +40,10 @@ public class BasicPlayerBehavior : MonoBehaviour
             // We are grounded, so recalculate
             // move direction directly from axes
 
-            moveDirection = new Vector3(Input.GetAxis("J1LeftJoystickHorizontal"), 0.0f, -Input.GetAxis("J1LeftJoystickVertical"));
+            moveDirection = new Vector3(Input.GetAxis(LeftJoystickHorizontal), 0.0f, -Input.GetAxis(LeftJoystickVertical));
             moveDirection *= speed;
-
-            if (Input.GetButton("J1AButton"))
+        
+            if (Input.GetButton(AButton))
             {
                 moveDirection.y = jumpSpeed;
             }
@@ -43,6 +58,21 @@ public class BasicPlayerBehavior : MonoBehaviour
         characterController.Move(moveDirection * Time.deltaTime);
     }
 
+    #region INITIALIZATION
+
+    void InitInputs()
+    {
+        LeftJoystickHorizontal = "J" + ID + "LeftJoystickHorizontal";
+        LeftJoystickVertical = "J" + ID + "LeftJoystickVertical";
+        RightJoystickHorizontal = "J" + ID + "RightJoystickHorizontal";
+        RightJoysticVertical = "J" + ID + "RightJoystickVertical";
+        AButton = "J" + ID + "AButton";
+        BButton = "J" + ID + "BButton";
+        XButton = "J" + ID + "XButton";
+        YButton = "J" + ID + "YButton";
+    }
+
+    #endregion
     /*
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
