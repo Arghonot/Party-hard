@@ -25,10 +25,10 @@ public class BasicPlayerBehavior : MonoBehaviour
             // We are grounded, so recalculate
             // move direction directly from axes
 
-            moveDirection = new Vector3(Input.GetAxis("LeftJoystickHorizontal"), 0.0f, -Input.GetAxis("LeftJoystickVertical"));
+            moveDirection = new Vector3(Input.GetAxis("J1LeftJoystickHorizontal"), 0.0f, -Input.GetAxis("J1LeftJoystickVertical"));
             moveDirection *= speed;
 
-            if (Input.GetButton("AButton"))
+            if (Input.GetButton("J1AButton"))
             {
                 moveDirection.y = jumpSpeed;
             }
