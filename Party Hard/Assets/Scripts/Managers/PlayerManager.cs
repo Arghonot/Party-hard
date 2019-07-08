@@ -34,5 +34,6 @@ public class PlayerManager : MonoBehaviour
         }
 
         players[index].gameObject.SetActive(true);
+        CameraManager.Instance.RegisterPlayer(players[index]);
     }
 }

@@ -21,7 +21,7 @@ public class MultipleTargetsCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Targets.Count == 0)
+        if (Targets == null || Targets.Count == 0)
         {
             return;
         }
