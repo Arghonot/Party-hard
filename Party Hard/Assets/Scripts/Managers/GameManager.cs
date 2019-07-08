@@ -83,7 +83,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void TriggerEndOfRound()
     {
-        print("Calling Play");
         SceneManager.LoadScene(NextLevel);
     }
 
@@ -94,7 +93,6 @@ public class GameManager : MonoBehaviour
 
     public void Quit()
     {
-        print("quit");
         UnityEditor.EditorApplication.isPlaying = false;
     }
 

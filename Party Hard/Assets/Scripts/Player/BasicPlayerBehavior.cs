@@ -14,6 +14,13 @@ public class BasicPlayerBehavior : MonoBehaviour
 
     private Vector3 moveDirection = Vector3.zero;
 
+    #region DEATH
+
+    bool ShouldWarpToPosition;
+    Vector3 WarpPosition;
+
+    #endregion
+
     #region INPUT NAMES
 
     string LeftJoystickHorizontal;
@@ -42,7 +49,7 @@ public class BasicPlayerBehavior : MonoBehaviour
 
             moveDirection = new Vector3(Input.GetAxis(LeftJoystickHorizontal), 0.0f, -Input.GetAxis(LeftJoystickVertical));
             moveDirection *= speed;
-        
+
             if (Input.GetButton(AButton))
             {
                 moveDirection.y = jumpSpeed;
@@ -56,6 +63,17 @@ public class BasicPlayerBehavior : MonoBehaviour
 
         // Move the controller
         characterController.Move(moveDirection * Time.deltaTime);
+    }
+
+    private void LateUpdate()
+    {
+        if (ShouldWarpToPosition)
+        {
+            characterController.enabled = false;
+            transform.position = WarpPosition;
+            ShouldWarpToPosition = false;
+            characterController.enabled = true;
+        }
     }
 
     #region INITIALIZATION
@@ -73,9 +91,14 @@ public class BasicPlayerBehavior : MonoBehaviour
     }
 
     #endregion
-    /*
-    void OnControllerColliderHit(ControllerColliderHit hit)
+
+    #region Death
+
+    public void WarpPlayer(Vector3 position)
     {
-        hit.transform.SendMessage("SomeFunction", SendMessageOptions.DontRequireReceiver);
-    }*/
+        WarpPosition = position;
+        ShouldWarpToPosition = true;
+    }
+
+    #endregion
 }

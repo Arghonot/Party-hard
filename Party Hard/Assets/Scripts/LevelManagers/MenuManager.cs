@@ -137,4 +137,13 @@ public class MenuManager : RoundManager
     #endregion
 
     #endregion
+
+    #region DEATH
+
+    public override void OnEnterDeathZone(Transform player)
+    {
+        PlayerManager.Instance.GetPlayer(player).WarpPlayer(Spawns[0].position);
+    }
+
+    #endregion
 }
