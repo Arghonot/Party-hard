@@ -41,6 +41,8 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    #region Custom Functions
+
     public void ActivatePlayer(int index)
     {
         if (index > players.Count || index < 0)
@@ -62,8 +64,60 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region GETTERS
+
+    #region BOOL
+
+    public bool isPlayerAlive(int index)
+    {
+        if (index < 0 || index > players.Count)
+            return false;
+
+        return players[index].gameObject.activeSelf;
+    }
+
+    #endregion
+
+    #region INT
+
+    public int AmountOfAlivePlayer()
+    {
+        int amount = 0;
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (players[i].gameObject.activeSelf)
+                amount++;
+        }
+
+        return amount;
+    }
+
+    public int GetAmountOfPlayer()
+    {
+        return players.Count;
+    }
+
+    #endregion
+
+    #region BasicPlayerBehavior
+
     public BasicPlayerBehavior GetPlayer(Transform player)
     {
         return playerBehaviors.Where(x => x.transform == player).First();
     }
+
+    public BasicPlayerBehavior GetPlayer(int index)
+    {
+        if (index < 0 || index > playerBehaviors.Length)
+            return null;
+
+        return playerBehaviors[index];
+    }
+
+    #endregion
+
+    #endregion
 }

@@ -10,12 +10,19 @@ public class FadingPlatformLevel : RoundManager
 
     private void Start()
     {
+        GameManager.Instance.SetCurrentRoundManager(this);
         MusicManager.Instance.SetupMusic(LevelOST);
 
         GameManager.Instance.SetupNextLevel("Menu");
     }
 
-    private void Update()
+    public override void OnEnterDeathZone(Transform player)
     {
+        base.OnEnterDeathZone(player);
+
+        if (PlayerManager.Instance.AmountOfAlivePlayer() <= 1)
+        {
+            GenericRoundEnd();
+        }
     }
 }

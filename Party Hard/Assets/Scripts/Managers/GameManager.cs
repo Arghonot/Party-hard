@@ -77,6 +77,11 @@ public class GameManager : MonoBehaviour
         CurrentRoundManager = manager;
     }
 
+    private void OnLevelWasLoaded(int level)
+    {
+        //CurrentRoundManager.GenericRoundStart();
+    }
+
     /// <summary>
     /// This action will trigger the end of the round.
     /// This shall be called only by the round manager.
