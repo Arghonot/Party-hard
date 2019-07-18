@@ -20,14 +20,15 @@ public class MenuManager : RoundManager
 
     public float TimeToTrigger;
     public float ZoneWidth;
+    bool didTriggerAZoneAlready = false;
 
     float TimeOnZone = 0f;
     public Zone TriggeredZone;
 
     private void Start()
     {
-        print("MenuManager");
-        MusicManager.Instance.SetupMusic(LevelOST);
+        //print("MenuManager");
+        //MusicManager.Instance.SetupMusic(LevelOST);
 
         GameManager.Instance.SetupNextLevel("PlatformLevel");
     }
@@ -74,11 +75,16 @@ public class MenuManager : RoundManager
         {
             return;
         }
+        if (didTriggerAZoneAlready)
+        {
+            return;
+        }
 
         if (PlayerInQuit.Length > 0)
         {
             if (ManageZone(Zone.Quit))
             {
+                didTriggerAZoneAlready = true;
                 Quit();
             }
         }
@@ -87,6 +93,7 @@ public class MenuManager : RoundManager
         {
             if (ManageZone(Zone.Play))
             {
+                didTriggerAZoneAlready = true;
                 StartGame();
             }
         }
@@ -95,6 +102,7 @@ public class MenuManager : RoundManager
         {
             if (ManageZone(Zone.Settings))
             {
+                didTriggerAZoneAlready = true;
                 Settings();
             }
         }

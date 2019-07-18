@@ -62,39 +62,80 @@ public class GameManager : MonoBehaviour
 
     RoundManager CurrentRoundManager;
 
+    #region UNITY API
+
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
     }
+
+    private void Start()
+    {
+        // First we load the menu
+        NextLevel = "Menu";
+        StartCoroutine(LoadYourAsyncScene());
+
+        StartRound = new List<CustomActions>();
+        EndRound = new List<CustomActions>();
+    }
+
+    #endregion
+
+    #region GETTERS
 
     public RoundManager GetCurrentRoundManager()
     {
         return CurrentRoundManager;
     }
 
+    #endregion
+
+    #region SETTERS
+
     public void SetCurrentRoundManager(RoundManager manager)
     {
         CurrentRoundManager = manager;
     }
 
-    private void OnLevelWasLoaded(int level)
+    #endregion
+
+    #region LevelManagement
+
+    private void OnLevelWasLoaded()
     {
-        //CurrentRoundManager.GenericRoundStart();
+        CurrentRoundManager = FindObjectOfType<RoundManager>();
+
+        MusicManager.Instance.SetupMusic(CurrentRoundManager.LevelOST);
+        ReinitActions();
+        CurrentRoundManager.GenericInit();
+
+        SortActions();
+        CallStartRoundActions();
     }
 
-    /// <summary>
-    /// This action will trigger the end of the round.
-    /// This shall be called only by the round manager.
-    /// </summary>
-    public void TriggerEndOfRound()
+    IEnumerator LoadYourAsyncScene()
     {
-        SceneManager.LoadScene(NextLevel);
+        print("Load scene");
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(NextLevel);
+
+        // Wait until the asynchronous scene fully loads
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        OnLevelWasLoaded();
     }
+
+    #endregion
 
     public void SetupNextLevel(string nextlevel)
     {
         NextLevel = nextlevel;
     }
+
+    #region IN GAME ACTIONS
 
     public void Quit()
     {
@@ -105,4 +146,60 @@ public class GameManager : MonoBehaviour
     {
         print("Calling settings");
     }
+
+    /// <summary>
+    /// This action will trigger the end of the round.
+    /// This shall be called only by the round manager.
+    /// </summary>
+    public void TriggerEndOfRound()
+    {
+        CallEndRoundActions();
+
+        StartCoroutine(LoadYourAsyncScene());
+        //SceneManager.LoadScene(NextLevel);
+    }
+
+    #endregion
+
+    #region ACTIONS
+
+    void CallStartRoundActions()
+    {
+        for (int i = 0; i < StartRound.Count; i++)
+        {
+            StartRound[i].action();
+        }
+    }
+
+    void CallEndRoundActions()
+    {
+        for (int i = 0; i < EndRound.Count; i++)
+        {
+            EndRound[i].action();
+        }
+    }
+
+    void ReinitActions()
+    {
+        StartRound = new List<CustomActions>();//.Clear();
+        EndRound = new List<CustomActions>();//.Clear();
+    }
+
+    void SortActions()
+    {
+        StartRound = StartRound.OrderBy(x => x.weight).ToList();
+        EndRound = EndRound.OrderBy(x => x.weight).ToList();
+    }
+
+    public void RegisterToStartRound(CustomActions action)
+    {
+        StartRound.Add(action);
+    }
+
+    public void RegisterToEndRound(CustomActions action)
+    {
+        EndRound.Add(action);
+    }
+
+    #endregion
 }

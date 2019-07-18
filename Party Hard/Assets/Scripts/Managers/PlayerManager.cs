@@ -100,6 +100,19 @@ public class PlayerManager : MonoBehaviour
         return players.Count;
     }
 
+    public int GetAmountOfAcivatedPlayer()
+    {
+        int x = 0;
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (players[i].gameObject.activeSelf)
+                x++;
+        }
+
+        return x;
+    }
+
     #endregion
 
     #region BasicPlayerBehavior
