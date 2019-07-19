@@ -10,15 +10,22 @@ public class BasicPlayerBehavior : MonoBehaviour
 
     #region Player Rotation
 
+    float RotationPrecision = 0.001f;
     public float RotationSpeed;
 
     #endregion
 
+    #region Player Movement
+
+    public int AmountOfPossibleJumps;
+    int CurrentAmountOfJumps;
     public float speed = 6.0f;
     public float jumpSpeed = 8.0f;
     public float gravity = 20.0f;
 
     public Vector3 moveDirection = Vector3.zero;
+
+    #endregion
 
     #region DEATH
 
@@ -56,7 +63,6 @@ public class BasicPlayerBehavior : MonoBehaviour
     {
         MovePlayer();
 
-
         if (ShouldWarpToPosition)
         {
             characterController.enabled = false;
@@ -72,7 +78,25 @@ public class BasicPlayerBehavior : MonoBehaviour
 
     void MovePlayer()
     {
+        float movedirectiony = moveDirection.y;
         moveDirection = GetLeftJoystickDirection() * speed;
+        moveDirection.y = movedirectiony;
+
+        if (characterController.isGrounded || CurrentAmountOfJumps < AmountOfPossibleJumps)
+        {
+            if (characterController.isGrounded)
+            {
+                CurrentAmountOfJumps = 0;
+            }
+
+            if (Input.GetButtonDown(AButton))
+            {
+                CurrentAmountOfJumps++;
+                moveDirection.y = jumpSpeed;
+            }
+        }
+
+        moveDirection.y -= gravity * Time.deltaTime;
 
         characterController.Move(moveDirection * Time.deltaTime);
 
@@ -82,7 +106,7 @@ public class BasicPlayerBehavior : MonoBehaviour
 
     void HandlePlayerRotation()
     {
-        if (GetPlayerOrientation() == Vector3.zero)
+        if (!isRightJoystickBeingUsed())
         {
             return;
         }
@@ -120,6 +144,18 @@ public class BasicPlayerBehavior : MonoBehaviour
             Input.GetAxis(RightJoystickHorizontal),
             0.0f,
             -Input.GetAxis(RightJoysticVertical));
+    }
+
+    bool isRightJoystickBeingUsed()
+    {
+
+        if ((Input.GetAxis(RightJoystickHorizontal) < -RotationPrecision || Input.GetAxis(RightJoystickHorizontal) > RotationPrecision) && 
+            (Input.GetAxis(RightJoysticVertical) < -RotationPrecision || Input.GetAxis(RightJoysticVertical) > RotationPrecision))
+        {
+            return true;
+        }
+
+        return false;
     }
 
     #endregion
