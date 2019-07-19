@@ -26,11 +26,17 @@ public class CameraManager : MonoBehaviour
 
     public void RegisterPlayer(Transform player)
     {
-        FullScreenCamera.Targets.Add(player);
+        if (!FullScreenCamera.Targets.Contains(player))
+        {
+            FullScreenCamera.Targets.Add(player);
+        }
     }
 
     public void UnRegisterPlayer(Transform player)
     {
-        FullScreenCamera.Targets.Remove(player);
+        if (FullScreenCamera.Targets.Contains(player))
+        {
+            FullScreenCamera.Targets.Remove(player);
+        }
     }
 }

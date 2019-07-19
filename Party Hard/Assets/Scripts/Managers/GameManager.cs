@@ -101,8 +101,9 @@ public class GameManager : MonoBehaviour
 
     #region LevelManagement
 
-    private void OnLevelWasLoaded()
+    private void CustomOnLevelWasLoaded()
     {
+        print("OnLevelWasLoaded");
         CurrentRoundManager = FindObjectOfType<RoundManager>();
 
         MusicManager.Instance.SetupMusic(CurrentRoundManager.LevelOST);
@@ -125,7 +126,11 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        OnLevelWasLoaded();
+        print(NextLevel + " loaded");
+
+        CustomOnLevelWasLoaded();
+        yield return null;
+
     }
 
     #endregion
@@ -154,7 +159,7 @@ public class GameManager : MonoBehaviour
     public void TriggerEndOfRound()
     {
         CallEndRoundActions();
-
+        print("TriggerEndOfRound");
         StartCoroutine(LoadYourAsyncScene());
         //SceneManager.LoadScene(NextLevel);
     }
