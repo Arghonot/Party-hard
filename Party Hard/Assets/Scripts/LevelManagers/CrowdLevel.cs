@@ -44,7 +44,7 @@ public class CrowdLevel : RoundManager
 
     }
 
-    public override void OnEnterDeathZone(Transform player)
+    public override void BasicOnEnterDeathZone(Transform player)
     {
         PlayerManager.Instance.GetPlayer(player).WarpPlayer(Spawns[0].position);
     }

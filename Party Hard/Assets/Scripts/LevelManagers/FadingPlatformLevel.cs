@@ -7,14 +7,6 @@ public class FadingPlatformLevel : RoundManager
     public float PlatformFadeTime;
     public LayerMask DetectionMask;
 
-
-    private void Start()
-    {
-        //GameManager.Instance.SetCurrentRoundManager(this);
-        //MusicManager.Instance.SetupMusic(LevelOST);
-
-    }
-
     #region ROUND EVENTS
 
     public override void GenericInit()
@@ -61,18 +53,4 @@ public class FadingPlatformLevel : RoundManager
     }
 
     #endregion
-
-    public override void OnEnterDeathZone(Transform player)
-    {
-
-        base.OnEnterDeathZone(player);
-
-        if (PlayerManager.Instance.AmountOfAlivePlayer() <= 1)
-        {
-            GenericRoundEnd();
-
-            GameManager.Instance.TriggerEndOfRound();
-
-        }
-    }
 }

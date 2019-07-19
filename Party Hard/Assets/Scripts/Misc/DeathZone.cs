@@ -8,7 +8,7 @@ public class DeathZone : MonoBehaviour
     {
         if (other.gameObject.name.Contains("Player"))
         {
-            GameManager.Instance.GetCurrentRoundManager().OnEnterDeathZone(other.transform);
+            GameManager.Instance.GetCurrentRoundManager().FunctionalOnEnterDeathZone(other.transform);
         }
         else
         {

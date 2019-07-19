@@ -185,7 +185,7 @@ public class MenuManager : RoundManager
 
     #region DEATH
 
-    public override void OnEnterDeathZone(Transform player)
+    public override void FunctionalOnEnterDeathZone(Transform player)
     {
         PlayerManager.Instance.GetPlayer(player).WarpPlayer(Spawns[0].position);
     }

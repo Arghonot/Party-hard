@@ -76,9 +76,26 @@ public class RoundManager : MonoBehaviour
     /// This function is called whenever a player fall from the level's platforms.
     /// </summary>
     /// <param name="player"></param>
-    public virtual void OnEnterDeathZone(Transform player)
+    public virtual void BasicOnEnterDeathZone(Transform player)
     {
         PlayerManager.Instance.ManagePlayerDeath(player);
+    }
+
+    /// <summary>
+    /// This function handle the realBehavior for when a player fall on the death zone.
+    /// This implementation is the most likely to be called.
+    /// </summary>
+    /// <param name="player">The player that fell.</param>
+    public virtual void FunctionalOnEnterDeathZone(Transform player)
+    {
+        BasicOnEnterDeathZone(player);
+
+        if (PlayerManager.Instance.AmountOfAlivePlayer() <= 1)
+        {
+            GenericRoundEnd();
+
+            GameManager.Instance.TriggerEndOfRound();
+        }
     }
 
     #endregion

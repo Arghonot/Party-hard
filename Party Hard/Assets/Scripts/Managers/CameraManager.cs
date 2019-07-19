@@ -26,8 +26,10 @@ public class CameraManager : MonoBehaviour
 
     public void RegisterPlayer(Transform player)
     {
+        // We don't want to have the same player multiple times as a target
         if (!FullScreenCamera.Targets.Contains(player))
         {
+            // We use it as a target
             FullScreenCamera.Targets.Add(player);
         }
     }
