@@ -27,15 +27,16 @@ public class Walker : MonoBehaviour
     void SetNewTargetForAgent()
     {
         agent.SetDestination(new Vector3(
-            Random.Range(floor.position.x - floor.localScale.x + mapBorder, floor.position.x + floor.localScale.x - mapBorder),
+            Random.Range(floor.position.x - (floor.localScale.x / 2f) + mapBorder, floor.position.x + (floor.localScale.x / 2f) - mapBorder),
             floor.position.y,
-            Random.Range(floor.position.z - floor.localScale.z + mapBorder, floor.position.z + floor.localScale.z - mapBorder)));
+            Random.Range(floor.position.z - (floor.localScale.z / 2f) + mapBorder, floor.position.z + (floor.localScale.z / 2f) - mapBorder)));
     }
 
     #region INITIALIZATION
 
-    public void InitWalker(Transform floorbound, Vector3 spawnpos)
+    public void InitWalker(Transform floorbound, Vector3 spawnpos, float border)
     {
+        mapBorder = border;
         print(spawnpos);
         agent = GetComponent<NavMeshAgent>();
 

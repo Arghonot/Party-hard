@@ -180,6 +180,7 @@ public class BasicPlayerBehavior : MonoBehaviour
 
     public void WarpPlayer(Vector3 position)
     {
+        moveDirection = Vector3.zero;
         WarpPosition = position;
         ShouldWarpToPosition = true;
     }

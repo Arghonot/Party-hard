@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CrowdLevel : RoundManager
 {
+    public float mapBorder;
     public int amountOfWalkers;
     public Transform Floor;
     public GameObject WalkerPrefab;
@@ -26,9 +27,10 @@ public class CrowdLevel : RoundManager
             walkers.Add(Instantiate(WalkerPrefab).GetComponent<Walker>());
             walkers[i].gameObject.SetActive(false);
             walkers[i].InitWalker(Floor, new Vector3(
-            Random.Range(Floor.position.x - Floor.lossyScale.x, Floor.position.x + Floor.lossyScale.x),
+            Random.Range(Floor.position.x - (Floor.lossyScale.x / 2f), Floor.position.x + (Floor.lossyScale.x / 2f)),
             Floor.position.y,
-            Random.Range(Floor.position.z - Floor.lossyScale.z, Floor.position.z + Floor.lossyScale.z)));
+            Random.Range(Floor.position.z - (Floor.lossyScale.z / 2f), Floor.position.z + (Floor.lossyScale.z / 2f))),
+            mapBorder);
         }
     }
 

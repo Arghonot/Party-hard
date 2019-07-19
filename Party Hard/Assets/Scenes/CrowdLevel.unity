@@ -159,7 +159,10 @@ MonoBehaviour:
   LevelOST: {fileID: 0}
   Spawns: []
   Rules: 
-  amountOfWalkers: 50
+  DesiredCameraOffset: {x: 0, y: 0, z: 0}
+  DesiredCameraRotation: {x: 0, y: 0, z: 0}
+  mapBorder: 1
+  amountOfWalkers: 30
   Floor: {fileID: 1290769401}
   WalkerPrefab: {fileID: 1260014178718865146, guid: 502e36b03e1a8a74992b54bc166eb11e,
     type: 3}
@@ -191,7 +194,7 @@ Transform:
   m_GameObject: {fileID: 1290769400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 25, y: 1, z: 25}
+  m_LocalScale: {x: 35, y: 1, z: 35}
   m_Children: []
   m_Father: {fileID: 2137531676}
   m_RootOrder: 0

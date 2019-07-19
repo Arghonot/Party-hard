@@ -14225,6 +14225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7cb53e77196b38499a678f376d01416, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Timer: 0
   LevelOST: {fileID: 8300000, guid: 72a611f8dd5bd5943bbb494b41d85966, type: 3}
   Spawns:
   - {fileID: 497824140}
@@ -14232,6 +14233,8 @@ MonoBehaviour:
   - {fileID: 343974071}
   - {fileID: 874557579}
   Rules: 
+  DesiredCameraOffset: {x: 0, y: 0, z: 0}
+  DesiredCameraRotation: {x: 0, y: 0, z: 0}
   PlatformFadeTime: 10
   DetectionMask:
     serializedVersion: 2
@@ -15790,7 +15793,7 @@ PrefabInstance:
     - target: {fileID: 261255815471131286, guid: 9b000884aad68784eaa691c1837dc697,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.74
+      value: 21.5
       objectReference: {fileID: 0}
     - target: {fileID: 261255815471131286, guid: 9b000884aad68784eaa691c1837dc697,
         type: 3}
@@ -15800,7 +15803,7 @@ PrefabInstance:
     - target: {fileID: 261255815471131286, guid: 9b000884aad68784eaa691c1837dc697,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.351978
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 261255815471131286, guid: 9b000884aad68784eaa691c1837dc697,
         type: 3}
@@ -15842,5 +15845,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 261255815471131284, guid: 9b000884aad68784eaa691c1837dc697,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261255815471131284, guid: 9b000884aad68784eaa691c1837dc697,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b5ae46acc560f7a4a8d9f687c51cef25, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b000884aad68784eaa691c1837dc697, type: 3}
