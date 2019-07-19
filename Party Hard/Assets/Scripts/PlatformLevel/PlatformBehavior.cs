@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlatformBehavior : MonoBehaviour
+public class PlatformBehavior : GameProps
 {
     public float fadeTime;
 
@@ -11,15 +11,25 @@ public class PlatformBehavior : MonoBehaviour
     LayerMask mask;
     Material mat;
 
-    private void Start()
+    #region Interface Implementation
+
+    public override void Init()
     {
         mat = GetComponent<MeshRenderer>().material;
         fadeTime = ((FadingPlatformLevel)GameManager.Instance.GetCurrentRoundManager()).PlatformFadeTime;
         mask = ((FadingPlatformLevel)GameManager.Instance.GetCurrentRoundManager()).DetectionMask;
+        isInitialized = true;
     }
+
+    #endregion
 
     private void Update()
     {
+        if (!isInitialized)
+        {
+            return;
+        }
+
         var colliders = Physics.OverlapBox(transform.position, Vector3.one * transform.localScale.x, Quaternion.identity, mask);
 
         if (colliders.Length > 0)

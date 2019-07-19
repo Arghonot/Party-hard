@@ -13,14 +13,51 @@ public class FadingPlatformLevel : RoundManager
         //GameManager.Instance.SetCurrentRoundManager(this);
         //MusicManager.Instance.SetupMusic(LevelOST);
 
-        GameManager.Instance.SetupNextLevel("Menu");
     }
 
     #region ROUND EVENTS
 
-    public override void GenericRoundStart()
+    public override void GenericInit()
     {
-        print("welsh on fading platform");
+        GameManager.Instance.SetupNextLevel("Menu");
+
+        base.GenericInit();
+
+        // We place the players
+        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        {
+            DebugDefinition = "Generic round START",
+            action = new System.Action(base.GenericRoundStart),
+            weight = 1
+        });
+
+        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        {
+            DebugDefinition = "Init the platforms",
+            action = new System.Action(InitPlatforms),
+            weight = 2
+        });
+
+        GameManager.Instance.RegisterToEndRound(new CustomActions()
+        {
+            DebugDefinition = "Generic round END",
+            action = new System.Action(GenericRoundEnd),
+            weight = 1
+        });
+    }
+
+    #endregion
+
+    #region Round Start
+
+    void InitPlatforms()
+    {
+        var platforms = FindObjectsOfType<GameProps>();
+
+        for (int i = 0; i < platforms.Length; i++)
+        {
+            platforms[i].Init();
+        }
     }
 
     #endregion
@@ -32,13 +69,10 @@ public class FadingPlatformLevel : RoundManager
 
         if (PlayerManager.Instance.AmountOfAlivePlayer() <= 1)
         {
-            print("round end");
             GenericRoundEnd();
 
             GameManager.Instance.TriggerEndOfRound();
 
         }
-
-        print("On enter death zone " + PlayerManager.Instance.AmountOfAlivePlayer());
     }
 }

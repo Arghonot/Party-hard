@@ -10,12 +10,9 @@ public class RoundManager : MonoBehaviour
     public string Rules;
     //public string NextLevel;
 
-    private void Awake()
-    {
-//        GameManager.Instance.SetCurrentRoundManager(this);
-    }
+    #region Called by GameManager
 
-    public void GenericInit()
+    public virtual void GenericInit()
     {
         GameManager.Instance.RegisterToStartRound(new CustomActions()
         {
@@ -32,11 +29,22 @@ public class RoundManager : MonoBehaviour
         });
     }
 
+    #endregion
+
+    #region ROUND EVENTS
+
+    /// <summary>
+    /// This is the base implementation for the event "RoundStart"
+    /// </summary>
     public virtual void GenericRoundStart()
     {
+        print("RoundManager.GenericRoundStart");
         PlacePlayers();
     }
 
+    /// <summary>
+    /// This is the base implementation for the event "RoundEnd"
+    /// </summary>
     public virtual void GenericRoundEnd()
     {
         for (int i = 0; i < PlayerManager.Instance.GetAmountOfAcivatedPlayer(); i++)
@@ -49,6 +57,13 @@ public class RoundManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region MISCS
+
+    /// <summary>
+    /// This function is called in order to place the players on their proper spawn.
+    /// </summary>
     protected void PlacePlayers()
     {
         for (int i = 0; i < PlayerManager.Instance.GetAmountOfAcivatedPlayer(); i++)
@@ -57,8 +72,15 @@ public class RoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// This function is called whenever a player fall from the level's platforms.
+    /// </summary>
+    /// <param name="player"></param>
     public virtual void OnEnterDeathZone(Transform player)
     {
         PlayerManager.Instance.ManagePlayerDeath(player);
     }
+
+    #endregion
+
 }

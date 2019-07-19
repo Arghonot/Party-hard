@@ -43,6 +43,18 @@ public class PlayerManager : MonoBehaviour
 
     #region Custom Functions
 
+    public void ActivatePlayingPlayers()
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (ActivatedPlayers[i])
+            {
+                players[i].gameObject.SetActive(true);
+                CameraManager.Instance.RegisterPlayer(players[i]);
+            }
+        }
+    }
+
     public void ActivatePlayer(int index)
     {
         if (index > players.Count || index < 0)

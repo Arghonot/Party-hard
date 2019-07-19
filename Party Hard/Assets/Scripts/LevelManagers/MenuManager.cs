@@ -25,13 +25,50 @@ public class MenuManager : RoundManager
     float TimeOnZone = 0f;
     public Zone TriggeredZone;
 
-    private void Start()
-    {
-        //print("MenuManager");
-        //MusicManager.Instance.SetupMusic(LevelOST);
+    #region ROUND EVENTS
 
+    public override void GenericInit()
+    {
         GameManager.Instance.SetupNextLevel("PlatformLevel");
+
+        base.GenericInit();
+
+        // We place the players
+        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        {
+            DebugDefinition = "Generic round START",
+            action = new System.Action(base.GenericRoundStart),
+            weight = 1
+        });
+
+        // We enable them
+        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        {
+            DebugDefinition = "Enable Playable Players",
+            action = new System.Action(EnablePlayablePlayers),
+            weight = 2
+        });
+
+        // we call the generic round end
+        GameManager.Instance.RegisterToEndRound(new CustomActions()
+        {
+            DebugDefinition = "Generic round END",
+            action = new System.Action(GenericRoundEnd),
+            weight = 1
+        });
     }
+
+    #endregion
+
+    #region INIT
+
+    void EnablePlayablePlayers()
+    {
+        base.PlacePlayers();
+        PlayerManager.Instance.ActivatePlayingPlayers();
+    }
+
+    #endregion
 
     #region RUNTIME
 

@@ -91,9 +91,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca827c1d39fe15a47b0c9925d3afe786, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ID: 0
+  RotationSpeed: 10
+  AmountOfPossibleJumps: 2
   speed: 6
   jumpSpeed: 8
   gravity: 20
+  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!143 &507112193628272692
 CharacterController:
   m_ObjectHideFlags: 0
