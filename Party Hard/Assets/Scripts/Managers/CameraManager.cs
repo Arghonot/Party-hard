@@ -41,4 +41,14 @@ public class CameraManager : MonoBehaviour
             FullScreenCamera.Targets.Remove(player);
         }
     }
+
+    public void SetOffset(Vector3 newOffset)
+    {
+        FullScreenCamera.offset = newOffset;
+    }
+
+    public void RevertToOriginOffset()
+    {
+        FullScreenCamera.RevertToOriginOffset();
+    }
 }

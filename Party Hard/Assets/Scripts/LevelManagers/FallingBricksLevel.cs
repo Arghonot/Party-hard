@@ -13,6 +13,8 @@ public class FallingBricksLevel : RoundManager
     /// </summary>
     public GameObject BrickPrefab;
 
+    public float HeightOffset;
+
     public float MaxSize;
     public float TimeBetweenSpawn;
     float TimeSinceSpawn;
@@ -23,13 +25,6 @@ public class FallingBricksLevel : RoundManager
     bool shouldRun = false;
 
     #region UNITY API
-
-    private void Start()
-    {
-#if UNITY_EDITOR
-        shouldRun = true;
-#endif
-    }
 
     private void Update()
     {
@@ -45,13 +40,30 @@ public class FallingBricksLevel : RoundManager
             InstantiateBrick();
             TimeSinceSpawn = 0f;
         }
+
+        UpdateSkyHeight();
     }
-
-
 
     #endregion
 
     #region Runtime
+
+    /// <summary>
+    /// We set the sky height at runtime so the level can keep going without the players
+    /// reaching a 'roof'.
+    /// </summary>
+    void UpdateSkyHeight()
+    {
+        float HighestPlayer = PlayerManager.Instance.GetHighestPlayerPosition();
+
+        if (HighestPlayer + HeightOffset > Sky.position.y)
+        {
+            Sky.position = new Vector3(
+                Sky.position.x,
+                HighestPlayer + HeightOffset,
+                Sky.position.z);
+        }
+    }
 
     void InstantiateBrick()
     {

@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script that move the camera, based on Brackeys's tutorial "MULTIPLE TARGET CAMERA in Unity" :
+/// "https://www.youtube.com/watch?v=aLpixrPvlB8"
+/// </summary>
 public class MultipleTargetsCamera : MonoBehaviour
 {
     public List<Transform> Targets;
@@ -11,12 +15,17 @@ public class MultipleTargetsCamera : MonoBehaviour
     public float maxZoom = 10f;
     public float ZoomLimiter = 50f;
 
+    Vector3 OriginalOffset;
+
     Camera cam;
     Vector3 velocity;
+
+    #region UNITY API
 
     private void Start()
     {
         cam = GetComponent<Camera>();
+        OriginalOffset = offset;
     }
 
     void LateUpdate()
@@ -30,6 +39,19 @@ public class MultipleTargetsCamera : MonoBehaviour
         Zoom();
 
     }
+
+    #endregion
+
+    #region PUBLIC FUNCTIONS
+
+    public void RevertToOriginOffset()
+    {
+        offset = OriginalOffset;
+    }
+
+    #endregion
+
+    #region RUNTIME MOVEMENTS
 
     private void Move()
     {
@@ -45,6 +67,10 @@ public class MultipleTargetsCamera : MonoBehaviour
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, newZoom, Time.deltaTime);
     }
+
+    #endregion
+
+    #region MISCS
 
     float GetGreatestDistance()
     {
@@ -75,4 +101,6 @@ public class MultipleTargetsCamera : MonoBehaviour
 
         return bounds.center;
     }
+
+    #endregion
 }

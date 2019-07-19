@@ -9,11 +9,21 @@ public class RoundManager : MonoBehaviour
     public List<Transform> Spawns;
     public string Rules;
     //public string NextLevel;
+    public Vector3 DesiredCameraOffset;
 
     #region Called by GameManager
 
     public virtual void GenericInit()
     {
+        if (DesiredCameraOffset == Vector3.zero)
+        {
+            CameraManager.Instance.RevertToOriginOffset();
+        }
+        else
+        {
+            CameraManager.Instance.SetOffset(DesiredCameraOffset);
+        }
+
         GameManager.Instance.RegisterToStartRound(new CustomActions()
         {
             DebugDefinition = "Generic round START",

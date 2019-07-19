@@ -326,7 +326,7 @@ MonoBehaviour:
   mask:
     serializedVersion: 2
     m_Bits: 512
-  TimeToTrigger: 3
+  TimeToTrigger: 0.5
   ZoneWidth: 4
   TriggeredZone: 0
 --- !u!1 &313332788

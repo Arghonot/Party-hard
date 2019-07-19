@@ -29,7 +29,7 @@ public class MenuManager : RoundManager
 
     public override void GenericInit()
     {
-        GameManager.Instance.SetupNextLevel("PlatformLevel");
+        GameManager.Instance.SetupNextLevel("FallingBricksLevel");
 
         base.GenericInit();
 

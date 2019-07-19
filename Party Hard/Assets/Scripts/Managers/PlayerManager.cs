@@ -80,6 +80,25 @@ public class PlayerManager : MonoBehaviour
 
     #region GETTERS
 
+    /// <summary>
+    /// Return The height of the player that is the Highest.
+    /// </summary>
+    /// <returns>The highest height for all the players.</returns>
+    public float GetHighestPlayerPosition()
+    {
+        float height = float.NegativeInfinity;
+
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (players[i].transform.position.y > height)
+            {
+                height = players[i].transform.position.y;
+            }
+        }
+
+        return height;
+    }
+
     #region BOOL
 
     public bool isPlayerAlive(int index)

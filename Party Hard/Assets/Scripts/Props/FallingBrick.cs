@@ -5,10 +5,32 @@ using UnityEngine;
 public class FallingBrick : MonoBehaviour
 {
     Rigidbody body;
+    bool TouchedTheGround = false;
+    bool mightTouchGround = false;
+    float SecondsToWait;
 
     private void Start()
     {
         body = GetComponent<Rigidbody>();
+        StartCoroutine(WaitToAllowBodyDeletion());
+    }
+
+    IEnumerator WaitToAllowBodyDeletion()
+    {
+        yield return new WaitForSeconds(SecondsToWait);
+
+        mightTouchGround = true;
+
+        yield return null;
+    }
+
+    private void Update()
+    {
+        if (TouchedTheGround && mightTouchGround)
+        {
+            Destroy(body);
+            Destroy(this);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -19,7 +41,8 @@ public class FallingBrick : MonoBehaviour
         }
         else
         {
-            Destroy(body);
+            TouchedTheGround = true;
+            //Destroy(body);
         }
     }
 }

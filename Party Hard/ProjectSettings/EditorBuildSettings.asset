@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PlatformLevel.unity
     guid: d2c86507178aa5a43b35afe309de7683
+  - enabled: 1
+    path: Assets/Scenes/FallingBricksLevel.unity
+    guid: b1847be11dddd3340a75e80a495ea41c
   m_configObjects: {}
