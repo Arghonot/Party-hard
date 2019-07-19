@@ -42,9 +42,19 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+    public void SetRotation(Vector3 newRot)
+    {
+        FullScreenCamera.transform.eulerAngles = newRot;
+    }
+
     public void SetOffset(Vector3 newOffset)
     {
         FullScreenCamera.offset = newOffset;
+    }
+
+    public void RevertToOriginalRotation()
+    {
+        FullScreenCamera.RevertToOriginRotation();
     }
 
     public void RevertToOriginOffset()

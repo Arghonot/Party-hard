@@ -16,6 +16,7 @@ public class MultipleTargetsCamera : MonoBehaviour
     public float ZoomLimiter = 50f;
 
     Vector3 OriginalOffset;
+    Vector3 OriginalRotation;
 
     Camera cam;
     Vector3 velocity;
@@ -26,6 +27,7 @@ public class MultipleTargetsCamera : MonoBehaviour
     {
         cam = GetComponent<Camera>();
         OriginalOffset = offset;
+        OriginalRotation = transform.eulerAngles;
     }
 
     void LateUpdate()
@@ -43,6 +45,11 @@ public class MultipleTargetsCamera : MonoBehaviour
     #endregion
 
     #region PUBLIC FUNCTIONS
+
+    public void RevertToOriginRotation()
+    {
+        transform.eulerAngles = OriginalRotation;
+    }
 
     public void RevertToOriginOffset()
     {

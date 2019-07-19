@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FallingBricksLevel : RoundManager
-{    
+{
     /// <summary>
     /// This is the object used as a frame for us to spawn bricks.
     /// </summary>
     public Transform Sky;
+
+    /// <summary>
+    /// The deathZone We would like to move.
+    /// </summary>
+    public Transform DeathZone;
     /// <summary>
     /// This is the prefab of the object that will be instantiated.
     /// </summary>
@@ -15,7 +20,7 @@ public class FallingBricksLevel : RoundManager
 
     public float HeightOffset;
 
-    public float MaxSize;
+    public Vector2 SizeRange;
     public float TimeBetweenSpawn;
     float TimeSinceSpawn;
 
@@ -42,6 +47,7 @@ public class FallingBricksLevel : RoundManager
         }
 
         UpdateSkyHeight();
+        UpdateDeathZone();
     }
 
     #endregion
@@ -65,9 +71,22 @@ public class FallingBricksLevel : RoundManager
         }
     }
 
+    void UpdateDeathZone()
+    {
+        float HighestPlayer = PlayerManager.Instance.GetHighestPlayerPosition();
+
+        if (HighestPlayer - (HeightOffset / 2f) > DeathZone.position.y)
+        {
+            DeathZone.position = new Vector3(
+                Sky.position.x,
+                HighestPlayer - (HeightOffset / 2f),
+                Sky.position.z);
+        }
+    }
+
     void InstantiateBrick()
     {
-        float Size = Random.Range(1f, MaxSize);
+        float Size = Random.Range(SizeRange.x, SizeRange.y);
         var brick = Instantiate(BrickPrefab);
 
         brick.transform.position = new Vector3(
@@ -121,6 +140,19 @@ public class FallingBricksLevel : RoundManager
     void PrepareLevel()
     {
         shouldRun = true;
+    }
+
+    #endregion
+
+    #region DEATH ZONE
+
+    public override void FunctionalOnEnterDeathZone(Transform player)
+    {
+        // We do want to Call it only for players
+        if (player.gameObject.CompareTag("Player"))
+        {
+            base.FunctionalOnEnterDeathZone(player);
+        }
     }
 
     #endregion

@@ -10,19 +10,15 @@ public class RoundManager : MonoBehaviour
     public string Rules;
     //public string NextLevel;
     public Vector3 DesiredCameraOffset;
+    public Vector3 DesiredCameraRotation;
 
     #region Called by GameManager
 
     public virtual void GenericInit()
     {
-        if (DesiredCameraOffset == Vector3.zero)
-        {
-            CameraManager.Instance.RevertToOriginOffset();
-        }
-        else
-        {
-            CameraManager.Instance.SetOffset(DesiredCameraOffset);
-        }
+        // Camera management
+        HandleCameraOffset();
+        HandleCameraRotation();
 
         GameManager.Instance.RegisterToStartRound(new CustomActions()
         {
@@ -70,6 +66,30 @@ public class RoundManager : MonoBehaviour
     #endregion
 
     #region MISCS
+
+    void HandleCameraOffset()
+    {
+        if (DesiredCameraOffset == Vector3.zero)
+        {
+            CameraManager.Instance.RevertToOriginOffset();
+        }
+        else
+        {
+            CameraManager.Instance.SetOffset(DesiredCameraOffset);
+        }
+    }
+
+    void HandleCameraRotation()
+    {
+        if (DesiredCameraRotation == Vector3.zero)
+        {
+            CameraManager.Instance.RevertToOriginalRotation();
+        }
+        else
+        {
+            CameraManager.Instance.SetRotation(DesiredCameraRotation);
+        }
+    }
 
     /// <summary>
     /// This function is called in order to place the players on their proper spawn.

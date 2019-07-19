@@ -39,7 +39,7 @@ public class FallingBrick : MonoBehaviour
         {
             print("player died");
         }
-        else
+        else if (collision.gameObject.CompareTag("Floor"))
         {
             TouchedTheGround = true;
             //Destroy(body);

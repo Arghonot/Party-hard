@@ -10,9 +10,9 @@ public class DeathZone : MonoBehaviour
         {
             GameManager.Instance.GetCurrentRoundManager().FunctionalOnEnterDeathZone(other.transform);
         }
-        else
-        {
-            Destroy(other.gameObject);
-        }
+        //else
+        //{
+        //    Destroy(other.gameObject);
+        //}
     }
 }
