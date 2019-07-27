@@ -18,6 +18,10 @@ public class CustomActions
     /// </summary>
     public int weight;
     /// <summary>
+    /// The type of the object that embed the action that will be called.
+    /// </summary>
+    public Type SourceType;
+    /// <summary>
     /// Only for debug, contains a brief description of the action.
     /// </summary>
     public string DebugDefinition;
@@ -25,9 +29,14 @@ public class CustomActions
 
 public class GameManager : MonoBehaviour
 {
+    public string currentphase;
+
+    public float TimeBeforeStartRound;
+    public float TimeBeforeEndRound;
+
     #region ACTIONS
 
-    public List<CustomActions> LaunchMenu;
+    public List<CustomActions> InitRound;
     public List<CustomActions> StartRound;
     public List<CustomActions> EndRound;
     public List<CustomActions> Entract;
@@ -67,16 +76,18 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+
+        InitRound = new List<CustomActions>();
+        StartRound = new List<CustomActions>();
+        EndRound = new List<CustomActions>();
     }
 
     private void Start()
     {
         // First we load the menu
         NextLevel = "Menu";
+        UIManager.Instance.Init();
         StartCoroutine(LoadYourAsyncScene());
-
-        StartRound = new List<CustomActions>();
-        EndRound = new List<CustomActions>();
     }
 
     #endregion
@@ -107,17 +118,26 @@ public class GameManager : MonoBehaviour
         CurrentRoundManager = FindObjectOfType<RoundManager>();
 
         MusicManager.Instance.SetupMusic(CurrentRoundManager.LevelOST);
-        ReinitActions();
+
         CurrentRoundManager.GenericInit();
 
         SortActions();
-        CallStartRoundActions();
+        CallInitRoundActions();
     }
 
     IEnumerator LoadYourAsyncScene()
     {
-        print("Load scene");
+        // we don't want pauses when going to the menu
+        bool ShallApplyPauses = !(NextLevel == "Menu");
 
+        currentphase = "END ROUND";
+
+        if (ShallApplyPauses)
+        {
+            yield return new WaitForSeconds(TimeBeforeEndRound);
+        }
+
+        ReinitActions();
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(NextLevel);
 
         // Wait until the asynchronous scene fully loads
@@ -126,9 +146,19 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        print(NextLevel + " loaded");
-
+        currentphase = "INIT ROUND";
+        // We prepare the level and register the actions
         CustomOnLevelWasLoaded();
+
+        if (ShallApplyPauses)
+        {
+            yield return new WaitForSeconds(TimeBeforeStartRound);
+        }
+
+        currentphase = "START ROUND";
+        // we now call the actions
+        CallStartRoundActions();
+
         yield return null;
 
     }
@@ -168,6 +198,16 @@ public class GameManager : MonoBehaviour
 
     #region ACTIONS
 
+    #region CALL
+
+    void CallInitRoundActions()
+    {
+        for (int i = 0; i < StartRound.Count; i++)
+        {
+            InitRound[i].action();
+        }
+    }
+
     void CallStartRoundActions()
     {
         for (int i = 0; i < StartRound.Count; i++)
@@ -184,27 +224,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #endregion
+
     void ReinitActions()
     {
-        StartRound = new List<CustomActions>();//.Clear();
-        EndRound = new List<CustomActions>();//.Clear();
+        InitRound.RemoveAll(x => x.SourceType == typeof(RoundManager));
+        StartRound.RemoveAll(x => x.SourceType == typeof(RoundManager));
+        EndRound.RemoveAll(x => x.SourceType == typeof(RoundManager));
+        //StartRound = new List<CustomActions>();//.Clear();
+        //EndRound = new List<CustomActions>();//.Clear();
     }
 
     void SortActions()
     {
+        InitRound = InitRound.OrderBy(x => x.weight).ToList();
         StartRound = StartRound.OrderBy(x => x.weight).ToList();
         EndRound = EndRound.OrderBy(x => x.weight).ToList();
     }
+
+    #region REGISTER
 
     public void RegisterToStartRound(CustomActions action)
     {
         StartRound.Add(action);
     }
 
+    public void RegisterToInitRound(CustomActions action)
+    {
+        InitRound.Add(action);
+    }
+
     public void RegisterToEndRound(CustomActions action)
     {
         EndRound.Add(action);
     }
+
+    #endregion
 
     #endregion
 }

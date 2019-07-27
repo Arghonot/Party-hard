@@ -16,10 +16,11 @@ public class FadingPlatformLevel : RoundManager
         base.GenericInit();
 
         // We place the players
-        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        GameManager.Instance.RegisterToInitRound(new CustomActions()
         {
             DebugDefinition = "Generic round START",
-            action = new System.Action(base.GenericRoundStart),
+            action = new System.Action(base.GenericRoundInit),
+            SourceType = typeof(RoundManager),
             weight = 1
         });
 
@@ -27,6 +28,7 @@ public class FadingPlatformLevel : RoundManager
         {
             DebugDefinition = "Init the platforms",
             action = new System.Action(InitPlatforms),
+            SourceType = typeof(RoundManager),
             weight = 2
         });
 
@@ -34,6 +36,7 @@ public class FadingPlatformLevel : RoundManager
         {
             DebugDefinition = "Generic round END",
             action = new System.Action(GenericRoundEnd),
+            SourceType = typeof(RoundManager),
             weight = 1
         });
     }

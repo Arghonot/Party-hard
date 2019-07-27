@@ -20,10 +20,11 @@ public class RoundManager : MonoBehaviour
         HandleCameraOffset();
         HandleCameraRotation();
 
-        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        GameManager.Instance.RegisterToInitRound(new CustomActions()
         {
             DebugDefinition = "Generic round START",
-            action = new System.Action(GenericRoundStart),
+            action = new System.Action(GenericRoundInit),
+            SourceType = typeof(RoundManager),
             weight = 1
         });
 
@@ -31,6 +32,7 @@ public class RoundManager : MonoBehaviour
         {
             DebugDefinition = "Generic round END",
             action = new System.Action(GenericRoundEnd),
+            SourceType = typeof(RoundManager),
             weight = 1
         });
     }
@@ -42,7 +44,7 @@ public class RoundManager : MonoBehaviour
     /// <summary>
     /// This is the base implementation for the event "RoundStart"
     /// </summary>
-    public virtual void GenericRoundStart()
+    public virtual void GenericRoundInit()
     {
         print("RoundManager.GenericRoundStart");
         PlacePlayers();

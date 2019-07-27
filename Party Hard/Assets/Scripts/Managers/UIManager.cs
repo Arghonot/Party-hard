@@ -18,6 +18,45 @@ public enum CanvasesIndex
 
 public class UIManager : MonoBehaviour
 {
-    public UIContent[] contents;
+    public UIContentHandler[] contents;
 
+    #region Singleton
+
+    static UIManager instance = null;
+    public static UIManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<UIManager>();
+            }
+
+            return instance;
+        }
+    }
+
+    #endregion
+
+    // TODO Add some init management for the score displayer
+
+    #region UNITY API
+
+    //private void Start()
+    //{
+    //    for (int i = 0; i < contents.Length; i++)
+    //    {
+    //        contents[i].Init();
+    //    }
+    //}
+
+    #endregion
+
+    public void Init()
+    {
+        for (int i = 0; i < contents.Length; i++)
+        {
+            contents[i].Init();
+        }
+    }
 }

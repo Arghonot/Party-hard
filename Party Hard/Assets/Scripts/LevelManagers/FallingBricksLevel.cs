@@ -109,10 +109,11 @@ public class FallingBricksLevel : RoundManager
         base.GenericInit();
 
         // We place the players
-        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        GameManager.Instance.RegisterToInitRound(new CustomActions()
         {
             DebugDefinition = "Generic round START",
-            action = new System.Action(base.GenericRoundStart),
+            action = new System.Action(base.GenericRoundInit),
+            SourceType = typeof(RoundManager),
             weight = 1
         });
 
@@ -122,13 +123,15 @@ public class FallingBricksLevel : RoundManager
         {
             DebugDefinition = "Generic round START",
             action = new System.Action(PrepareLevel),
-            weight = 1
+            SourceType = typeof(RoundManager),
+            weight = 2
         });
 
         GameManager.Instance.RegisterToEndRound(new CustomActions()
         {
             DebugDefinition = "Generic round END",
             action = new System.Action(GenericRoundEnd),
+            SourceType = typeof(RoundManager),
             weight = 1
         });
     }

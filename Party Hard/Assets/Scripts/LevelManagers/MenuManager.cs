@@ -34,10 +34,11 @@ public class MenuManager : RoundManager
         base.GenericInit();
 
         // We place the players
-        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        GameManager.Instance.RegisterToInitRound(new CustomActions()
         {
             DebugDefinition = "Generic round START",
-            action = new System.Action(base.GenericRoundStart),
+            action = new System.Action(base.GenericRoundInit),
+            SourceType = typeof(RoundManager),
             weight = 1
         });
 
@@ -46,6 +47,7 @@ public class MenuManager : RoundManager
         {
             DebugDefinition = "Enable Playable Players",
             action = new System.Action(EnablePlayablePlayers),
+            SourceType = typeof(RoundManager),
             weight = 2
         });
 
@@ -54,6 +56,7 @@ public class MenuManager : RoundManager
         {
             DebugDefinition = "Generic round END",
             action = new System.Action(GenericRoundEnd),
+            SourceType = typeof(RoundManager),
             weight = 1
         });
     }
