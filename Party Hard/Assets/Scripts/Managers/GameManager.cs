@@ -45,8 +45,7 @@ public class GameManager : MonoBehaviour
 
     #region LEVELS
 
-    string MenuLevel;
-    string EntractLevel;
+    public string CurrentLevel;
     string NextLevel;
 
     #endregion
@@ -114,7 +113,6 @@ public class GameManager : MonoBehaviour
 
     private void CustomOnLevelWasLoaded()
     {
-        print("OnLevelWasLoaded");
         CurrentRoundManager = FindObjectOfType<RoundManager>();
 
         MusicManager.Instance.SetupMusic(CurrentRoundManager.LevelOST);
@@ -145,6 +143,8 @@ public class GameManager : MonoBehaviour
         {
             yield return null;
         }
+
+        CurrentLevel = NextLevel;
 
         currentphase = "INIT ROUND";
         // We prepare the level and register the actions

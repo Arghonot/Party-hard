@@ -622,7 +622,8 @@ MonoBehaviour:
   - {fileID: 1193826360}
   - {fileID: 1448771472}
   - {fileID: 1160505189}
-  Rules: 
+  Rules: Bricks are falling from the sky, climb them in order to avoid falling on
+    the red area.
   DesiredCameraOffset: {x: 0, y: 22, z: -20}
   DesiredCameraRotation: {x: 40, y: 0, z: 0}
   Sky: {fileID: 1880214846}

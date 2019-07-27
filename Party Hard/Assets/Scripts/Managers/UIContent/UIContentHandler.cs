@@ -13,7 +13,10 @@ public class UIContentHandler : MonoBehaviour
 
     protected virtual void Show()
     {
-        gameObject.SetActive(true);
+        if (GameManager.Instance.CurrentLevel != "Menu")
+        {
+            gameObject.SetActive(true);
+        }
     }
 
     protected virtual void Hide()

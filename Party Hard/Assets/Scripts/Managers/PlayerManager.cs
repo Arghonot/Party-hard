@@ -39,9 +39,38 @@ public class PlayerManager : MonoBehaviour
 
             playerBehaviors[i] = players[i].gameObject.GetComponent<BasicPlayerBehavior>();
         }
+
+        // We place the players
+        GameManager.Instance.RegisterToInitRound(new CustomActions()
+        {
+            DebugDefinition = "PLAYER MANAGER START -> place players",
+            action = new System.Action(PlacePlayers),
+            SourceType = typeof(PlayerManager),
+            weight = -100
+        });
+        
+        // We place the players
+        GameManager.Instance.RegisterToStartRound(new CustomActions()
+        {
+            DebugDefinition = "PLAYER MANAGER START -> place players",
+            action = new System.Action(ActivatePlayingPlayers),
+            SourceType = typeof(PlayerManager),
+            weight = -100
+        });
     }
 
     #region Custom Functions
+
+    void PlacePlayers()
+    {
+        List<Transform> Spawns = GameManager.Instance.GetCurrentRoundManager().Spawns;
+
+        for (int i = 0; i < GetAmountOfAcivatedPlayer(); i++)
+        {
+            playerBehaviors[i].WarpPlayer(Spawns[i].position);
+            playerBehaviors[i].enabled = false;
+        }
+    }
 
     public void ActivatePlayingPlayers()
     {
@@ -50,6 +79,7 @@ public class PlayerManager : MonoBehaviour
             if (ActivatedPlayers[i])
             {
                 players[i].gameObject.SetActive(true);
+                playerBehaviors[i].enabled = true;
                 CameraManager.Instance.RegisterPlayer(players[i]);
             }
         }

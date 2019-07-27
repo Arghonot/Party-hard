@@ -20,13 +20,13 @@ public class RoundManager : MonoBehaviour
         HandleCameraOffset();
         HandleCameraRotation();
 
-        GameManager.Instance.RegisterToInitRound(new CustomActions()
-        {
-            DebugDefinition = "Generic round START",
-            action = new System.Action(GenericRoundInit),
-            SourceType = typeof(RoundManager),
-            weight = 1
-        });
+        //GameManager.Instance.RegisterToInitRound(new CustomActions()
+        //{
+        //    DebugDefinition = "Generic round START",
+        //    action = new System.Action(GenericRoundInit),
+        //    SourceType = typeof(RoundManager),
+        //    weight = 1
+        //});
 
         GameManager.Instance.RegisterToEndRound(new CustomActions()
         {
@@ -41,14 +41,14 @@ public class RoundManager : MonoBehaviour
 
     #region ROUND EVENTS
 
-    /// <summary>
-    /// This is the base implementation for the event "RoundStart"
-    /// </summary>
-    public virtual void GenericRoundInit()
-    {
-        print("RoundManager.GenericRoundStart");
-        PlacePlayers();
-    }
+    ///// <summary>
+    ///// This is the base implementation for the event "RoundStart"
+    ///// </summary>
+    //public virtual void GenericRoundInit()
+    //{
+    //    print("RoundManager.GenericRoundStart");
+    //    PlacePlayers();
+    //}
 
     /// <summary>
     /// This is the base implementation for the event "RoundEnd"
@@ -93,16 +93,16 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// This function is called in order to place the players on their proper spawn.
-    /// </summary>
-    protected void PlacePlayers()
-    {
-        for (int i = 0; i < PlayerManager.Instance.GetAmountOfAcivatedPlayer(); i++)
-        {
-            PlayerManager.Instance.GetPlayer(i).WarpPlayer(Spawns[i].position);
-        }
-    }
+    ///// <summary>
+    ///// This function is called in order to place the players on their proper spawn.
+    ///// </summary>
+    //protected void PlacePlayers()
+    //{
+    //    for (int i = 0; i < PlayerManager.Instance.GetAmountOfAcivatedPlayer(); i++)
+    //    {
+    //        PlayerManager.Instance.GetPlayer(i).WarpPlayer(Spawns[i].position);
+    //    }
+    //}
 
     /// <summary>
     /// This function is called whenever a player fall from the level's platforms.

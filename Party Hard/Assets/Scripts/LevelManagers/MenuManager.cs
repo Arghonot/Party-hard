@@ -33,23 +33,23 @@ public class MenuManager : RoundManager
 
         base.GenericInit();
 
-        // We place the players
-        GameManager.Instance.RegisterToInitRound(new CustomActions()
-        {
-            DebugDefinition = "Generic round START",
-            action = new System.Action(base.GenericRoundInit),
-            SourceType = typeof(RoundManager),
-            weight = 1
-        });
+        //// We place the players
+        //GameManager.Instance.RegisterToInitRound(new CustomActions()
+        //{
+        //    DebugDefinition = "Generic round START",
+        //    action = new System.Action(base.GenericRoundInit),
+        //    SourceType = typeof(RoundManager),
+        //    weight = 1
+        //});
 
-        // We enable them
-        GameManager.Instance.RegisterToStartRound(new CustomActions()
-        {
-            DebugDefinition = "Enable Playable Players",
-            action = new System.Action(EnablePlayablePlayers),
-            SourceType = typeof(RoundManager),
-            weight = 2
-        });
+        //// We enable them
+        //GameManager.Instance.RegisterToStartRound(new CustomActions()
+        //{
+        //    DebugDefinition = "Enable Playable Players",
+        //    action = new System.Action(EnablePlayablePlayers),
+        //    SourceType = typeof(RoundManager),
+        //    weight = 2
+        //});
 
         // we call the generic round end
         GameManager.Instance.RegisterToEndRound(new CustomActions()
@@ -65,11 +65,11 @@ public class MenuManager : RoundManager
 
     #region INIT
 
-    void EnablePlayablePlayers()
-    {
-        base.PlacePlayers();
-        PlayerManager.Instance.ActivatePlayingPlayers();
-    }
+    //void EnablePlayablePlayers()
+    //{
+    //    base.PlacePlayers();
+    //    PlayerManager.Instance.ActivatePlayingPlayers();
+    //}
 
     #endregion
 

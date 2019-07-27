@@ -38,20 +38,6 @@ public class UIManager : MonoBehaviour
 
     #endregion
 
-    // TODO Add some init management for the score displayer
-
-    #region UNITY API
-
-    //private void Start()
-    //{
-    //    for (int i = 0; i < contents.Length; i++)
-    //    {
-    //        contents[i].Init();
-    //    }
-    //}
-
-    #endregion
-
     public void Init()
     {
         for (int i = 0; i < contents.Length; i++)
